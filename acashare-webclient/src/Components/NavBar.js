@@ -1,6 +1,6 @@
 import React from "react";
 
-const Navigation = () => (
+const NavBar = () => (
   <nav>
     <div className="nav-wrapper">
       <a href="home.html" className="brand-logo">acaShare</a>
@@ -13,4 +13,4 @@ const Navigation = () => (
   </nav>
 );
 
-export default Navigation;
+export default NavBar;

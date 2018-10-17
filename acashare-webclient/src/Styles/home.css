@@ -54,7 +54,7 @@ html, body {
     position: relative;
 }
 
-.tree-path {
+.subsite-title {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -62,6 +62,10 @@ html, body {
 
 .home-content {
     padding: 1.5em;
+}
+
+.path-list-item {
+    color: #757575 !important;
 }
 
 .path-list-item:hover {
@@ -74,6 +78,24 @@ html, body {
     margin: 1em;
     color: #757575;
     overflow: auto;
+}
+
+.favourites-item-wrapper:hover {
+    background-color: #e0f2f1;
+    border-radius: 10px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.favourites-wrapper {
+    margin: 1em;
+    color: #757575;
+    overflow: auto;
+    cursor: pointer;
+}
+
+.favourites-link {
+    color: #757575;
 }
 
 .last-activities-date {
@@ -119,4 +141,12 @@ html, body {
 
 .bloczek {
     display: block;
+}
+
+#reason {
+    margin-left: 2em;
+}
+
+#bigger {
+    padding-bottom: 1.7em;
 }
