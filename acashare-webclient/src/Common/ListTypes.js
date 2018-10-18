@@ -1,0 +1,1 @@
+var ListTypes = Object.freeze({"simple":1, "withSubtitle":2});

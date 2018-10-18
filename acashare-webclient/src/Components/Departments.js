@@ -1,69 +1,91 @@
 import React from 'react'
-import { Route, NavLink } from "react-router-dom";
-import Lecturers from './Lecturers';
+import { NavLink } from "react-router-dom";
 
-const departments = [
-  {name: "Informatyka", abbr: "Informatyka"},
-  {name: "Sztuka Nowych Mediów", abbr: "Sztuka Nowych Mediów"},
-  {name: "Kultura Japonii", abbr: "Kultura Japonii"},
-  {name: "Architektura Wnętrz", abbr: "Architektura Wnętrz"},
-];
+class Departments extends React.Component {
+  state = {
+    elements: []
+  }
+  
+  componentDidMount() {
+    fetch(`https://localhost:44349/api/v1/departmentsofuniversity/${this.props.location.univId}`)
+      .then(res => res.json())
+      .then(json => this.setState({elements: json}));
+  }
 
-const Departments = ( {match} ) => {
-  const departmentsLinks = departments.map((u) => 
-  <NavLink key={u.abbr} to={`${match.url}/${u.abbr}`} className="collection-item path-list-item">
-    <div>{u.name}
-      <li className="secondary-content">
-        <i className="material-icons">send</i>
-      </li>
-    </div>
-  </NavLink>);
+  render() {
+    return (
+      <>
+        {this.state.elements.map((d) => 
+          <NavLink 
+            key={d.name} 
+            to={{
+              pathname: `/universities/${d.name}/lessons`, 
+              deptId: d.departmentId,
+              deptName: d.name,
+              breadcrumbs: [
+                {title: "Uczelnie", path: `/universities`}, 
+                {title: this.props.location.univName, path: `/universities/${this.props.location.univId}`}, 
+                {title: d.name, path: `/universities/${this.props.location.univId}/lessons`}
+              ]
+            }} 
+            className="collection-item path-list-item">
 
-  return (<>
-      <Route exact path={match.path} render={() => <>{departmentsLinks}</>} />
-      <Route path={`${match.path}/:id`} render={(props) => <Lecturers {...props} />} />
-  </>);
+            <div>{d.name}
+              <li className="secondary-content">
+                <i className="material-icons">send</i>
+              </li>
+            </div>
+          </NavLink>
+        )}
+      </>
+    );
+  }
 }
 
 export default Departments
 
 
 
+
 // import React from 'react'
 // import { NavLink } from "react-router-dom";
 
-// const departments = [
-//   {name: "Informatyka", abbr: "Informatyka"},
-//   {name: "Sztuka Nowych Mediów", abbr: "Sztuka Nowych Mediów"},
-//   {name: "Kultura Japonii", abbr: "Kultura Japonii"},
-//   {name: "Architektura Wnętrz", abbr: "Architektura Wnętrz"},
-// ];
-
-// const departmentsLinks = departments.map((u) => 
-//   <NavLink key={u.abbr} to={u.abbr} className="collection-item path-list-item">
-//     <div>{u.name}
-//       <li className="secondary-content">
-//         <i className="material-icons">send</i>
-//       </li>
-//     </div>
-//   </NavLink>);
-
 // class Departments extends React.Component {
-//   constructor(props) {
-//     super(props);
-    
-//     this.props.handleAddBreadcrumb(title: this.props.match.params.id, link: this.props.match.params.id);
+//   state = {
+//     elements: []
 //   }
   
-//   render(){
-//     return(<>{departmentsLinks}</>);
+//   componentDidMount() {
+//     fetch(`https://localhost:44349/api/v1/departmentsofuniversity/${this.props.location.univId}`)
+//       .then(res => res.json())
+//       .then(json => this.setState({elements: json}));
+//   }
+
+//   render() {
+//     return (
+//       <>
+//         {this.state.elements.map((u) => 
+//           <NavLink 
+//             key={u.name} 
+//             to={{
+//               pathname: `/universities/${u.name}/lessons`, 
+//               deptId: u.departmentId,
+//               breadcrumbTitle: u.name, 
+//               breadcrumbs: [{title: "Uczelnie", path: `/universities`}, {title: u.name, path: `/universities/${u.universityId}`}],
+//               breadcrumbPath: `/universities/${u.universityId}`
+//             }} 
+//             className="collection-item path-list-item">
+
+//             <div>{u.name}
+//               <li className="secondary-content">
+//                 <i className="material-icons">send</i>
+//               </li>
+//             </div>
+//           </NavLink>
+//         )}
+//       </>
+//     );
 //   }
 // }
 
-// // const Departments = ( {match, handleAddBreadcrumb} ) => (
-// //   handleAddBreadcrumb(match.params.id, match.params.id),
-// //   <>{departmentsLinks}</>
-// // )
-
 // export default Departments
-

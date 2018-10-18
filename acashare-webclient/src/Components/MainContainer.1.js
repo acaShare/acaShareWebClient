@@ -9,7 +9,7 @@ const universities = [
   {name: "Szkoła Główna Gospodarstwa Wiejskiego", abbr: "SGGW"},
 ];
 
-class MainContainer extends React.Component {
+class MainContainer1 extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -60,4 +60,4 @@ class MainContainer extends React.Component {
   }
 }
 
-export default MainContainer
+export default MainContainer1
