@@ -8,21 +8,14 @@ const defaultBreadcrumb = { title: "Uczelnie", path: "/universities" };
 
 class MainContainer extends React.Component {
   state = {
-    elements: [],
     breadcrumbs: [
       defaultBreadcrumb
     ]
   }
 
-  componentDidMount() {
-    fetch(`https://localhost:44349/api/v1/universities`)
-      .then(res => res.json())
-      .then(json => this.setState({elements: json}));
-  }
-
   componentWillReceiveProps(nextProps){
     if(nextProps){
-      var newBreadcrumbs = nextProps.location.breadcrumbs ? nextProps.location.breadcrumbs : [defaultBreadcrumb];
+      var newBreadcrumbs = nextProps.location.state ? nextProps.location.state.breadcrumbs : [defaultBreadcrumb];
 
       this.setState({
         breadcrumbs: newBreadcrumbs
@@ -48,17 +41,17 @@ class MainContainer extends React.Component {
             <Route 
               exact 
               path="/universities" 
-              render={() => {return <Universities elements={this.state.elements} />}} 
+              component={(props) => <Universities {...props} />} 
             />
             <Route 
               exact 
-              path="/universities/:id"
-              render={() => { return <Departments {...this.props} />}} 
+              path="/universities/:universityId/departments"
+              component={(props) => <Departments {...props} /> }
             />
             <Route 
               exact 
-              path="/universities/:id/Lessons"
-              render={() => { return <Lessons {...this.props} />}} 
+              path="/universities/:universityId/departments/:departmentId/lessons"
+              component={(props) => <Lessons {...props} />} 
             />
           </ul>
         </div>
