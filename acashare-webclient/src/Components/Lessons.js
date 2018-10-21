@@ -1,24 +1,32 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
+import MainList from "./MainList";
+import IdConstant from '../Common/IdConstant';
+import ListTypes from '../Common/ListTypes';
 
 class Lessons extends React.Component {
+  state = {
+    elements: []
+  }
+
+  componentDidMount() {
+    fetch(`https://localhost:44349/api/v1/lessonsfromdepartment/${this.props.match.params.deptId}`)
+      .then(res => res.json())
+      .then(json => this.setState({elements: json}));
+  }
+
+  handleElementOnClick = (title, id) => {
+    var clickedElement = {title: title, id: id, to: `/universities/${this.params.match.params.univId}/departments/${this.params.match.params.deptId}/lessons/${id}/semesters`};
+    this.props.handleElementOnClick([clickedElement]);
+  }
+
   render() {
     return (
-      <>
-        {this.props.elements.length > 0 ? (this.props.elements.find(e => e.name === this.props.match.params.univName).departments.find(d => d.name === this.props.match.params.deptName).lessons.map((l, key) =>
-          <NavLink 
-            key={key} 
-            to={`/universities/${this.props.match.params.univName}/departments/${this.props.match.params.deptName}/lessons/${l.sectionOfSubject.subject.name}`} 
-            className="collection-item path-list-item">
-
-            <div>{l.sectionOfSubject.subject.name}
-              <li className="secondary-content">
-                <i className="material-icons">send</i>
-              </li>
-            </div>
-          </NavLink>
-        ) ) : (<div>Ładowanie</div>) }
-      </>
+      <MainList 
+        listType={ListTypes.SIMPLE} 
+        elements={this.state.elements} 
+        nameOfPropertyToDisplay="lessonId" 
+        handleElementOnClick={this.handleElementOnClick} 
+        to={`lessons/${IdConstant}/semesters`} />
     );
   }
 }

@@ -1,1 +1,0 @@
-var RouteTypes = Object.freeze({"universities":1, "departments":2, "lecturers":3});

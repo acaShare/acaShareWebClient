@@ -1,1 +1,2 @@
-var ListTypes = Object.freeze({"simple":1, "withSubtitle":2});
+const ListTypes = Object.freeze({"SIMPLE":1, "WITH_SUBTITLE":2});
+export default ListTypes;
