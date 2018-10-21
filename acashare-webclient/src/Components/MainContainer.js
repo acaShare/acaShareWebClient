@@ -3,6 +3,8 @@ import { Route, NavLink } from 'react-router-dom';
 import Universities from './Universities';
 import Departments from './Departments';
 import Lessons from './Lessons';
+import { PrivateRoute } from '../Authentication/_components';
+import UserTypes from '../Common/UserTypes';
 
 const defaultBreadcrumb = { title: "Uczelnie", id: "x", to: "/universities" };
 
@@ -46,7 +48,7 @@ class MainContainer extends React.Component {
 
         <div className="home-content">
           <Route exact path={"/universities"} render={(props) => <Universities {...props} handleElementOnClick={this.onElementClicked} />} />
-          <Route exact path={"/universities/:univId/departments"} render={(props) => <Departments {...props} br={this.state.breadcrumbs} handleElementOnClick={this.onElementClicked} />} />
+          <PrivateRoute exact userType={UserTypes.MODERATOR} path={"/universities/:univId/departments"} component={(props) => <Departments {...props} br={this.state.breadcrumbs} handleElementOnClick={this.onElementClicked} />} />
           <Route exact path={"/universities/:univId/departments/:deptId/lessons"} render={(props) => <Lessons {...props} br={this.state.breadcrumbs} handleElementOnClick={this.onElementClicked} />} />
         </div>
       </>
